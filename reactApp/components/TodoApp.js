@@ -24,7 +24,9 @@ class TodoApp extends React.Component {
   addTodo(task) {
     axios.post(dbUrl + '/add', { task })
       .then(response => {
-        this.setState({todos: this.state.todos.concat(response.data)});
+        this.setState({
+          todos: this.state.todos.concat(response.data)
+        });
       })
       .catch(error => {
         console.log(error);
@@ -34,14 +36,13 @@ class TodoApp extends React.Component {
   removeTodo(id) {
     axios.post(dbUrl + '/remove', { id })
       .then(response => {
-        this.setState({todos: response.data})
+        this.setState({
+          todos: this.state.todos.filter(todo => todo._id !== id)
+        })
       })
-
-    // const todos = this.state.todos.slice();
-    // todos.splice(index, 1)
-    // this.setState({
-    //   todos: todos
-    // })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   toggleTodo(id) {
@@ -65,8 +66,8 @@ class TodoApp extends React.Component {
       <div>
         <InputLine submit={(task) =>
           this.addTodo(task)} />
-        <TodoList todoXClick={(index) =>this.removeTodo(index)}
-          todoItemClick={(index) => this.toggleTodo(index)}
+        <TodoList todoXClick={(id) => this.removeTodo(id)}
+          todoItemClick={(id) => this.toggleTodo(id)}
           todos={this.state.todos} />
       </div>
     )
