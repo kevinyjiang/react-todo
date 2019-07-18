@@ -13,8 +13,13 @@ class InputLine extends React.Component {
   }
 
   handleSubmit(event) {
-    this.props.submit(this.state.typedText);
-    this.setState({typedText: ''})
+    const typedText = this.state.typedText;
+    if (typedText.trim() !== '') {
+      this.props.submit(this.state.typedText);
+      this.setState({typedText: ''});
+    } else {
+      alert('Cannot add empty task.');
+    }
   }
 
   render() {
