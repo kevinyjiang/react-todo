@@ -1,4 +1,8 @@
-const dummyData = ['sleep', 'awake', 'shower', 'eat', 'poop']
+const dummyData = [
+  { taskText: "Catch 'em all", completed: true },
+  { taskText: "Build app", completed: false },
+  { taskText: "Commit changes", completed: false }
+]
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -26,7 +30,7 @@ class TodoList extends React.Component {
   render() {
     return (
       <ul>
-        {dummyData.map((item) => <Todo task={item} />)}
+        {dummyData.map((item) => <Todo task={item.taskText} completed={item.completed}/>)}
       </ul>
     )
   }
@@ -39,7 +43,10 @@ class Todo extends React.Component {
 
   render() {
     return(
-      <li><button>X</button>{this.props.task}</li>
+      <li>
+        <button>X</button>
+        {this.props.completed ? <strike>{this.props.task}</strike> : this.props.task}
+      </li>
     )
   }
 }
