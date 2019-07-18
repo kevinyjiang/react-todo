@@ -1,9 +1,3 @@
-const dummyData = [
-  { taskText: "Catch 'em all", completed: true },
-  { taskText: "Build app", completed: false },
-  { taskText: "Commit changes", completed: false }
-]
-
 import React from 'react';
 import axios from 'axios';
 
@@ -21,39 +15,41 @@ class TodoApp extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({todos: dummyData})
+    axios.get(dbUrl + '/all')
+      .then(response => {
+        this.setState({todos: response.data});
+      })
   }
 
   addTodo(task) {
     axios.post(dbUrl + '/add', { task })
       .then(response => {
-        this.setState({
-          todos: this.state.todos.concat(response.data)
-        });
-        console.log(this.state.todos)
+        this.setState({todos: this.state.todos.concat(response.data)});
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
       });
+  }
+
+  removeTodo(id) {
+    axios.post(dbUrl + '/remove', { id })
+      .then(response => {
+        this.setState({todos: response.data})
+      })
 
     // const todos = this.state.todos.slice();
-    // todos.push({
-    //   taskText: task,
-    //   completed: false
-    // });
-    //
-    // this.setState({todos: todos})
+    // todos.splice(index, 1)
+    // this.setState({
+    //   todos: todos
+    // })
   }
 
-  removeTodo(index) {
-    const todos = this.state.todos.slice();
-    todos.splice(index, 1)
-    this.setState({
-      todos: todos
-    })
-  }
+  toggleTodo(id) {
+    axios.post(dbUrl + '/toggle', { id })
+      .then(response => {
+        this.setState({todos: response.data})
+      })
 
-  toggleTodo(index) {
     const todos = this.state.todos.slice();
     todos[index] = {
       taskText: todos[index].taskText,
