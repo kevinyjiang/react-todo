@@ -3,9 +3,9 @@ const router = express.Router();
 
 const TodoItem = require('../models/TodoItem');
 
-router.get('/add', (req, res) => {
+router.post('/add', (req, res) => {
   const testTodo = new TodoItem({
-    task: "test task"
+    taskText: req.body.task
   });
 
   testTodo.save()
