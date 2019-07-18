@@ -21,12 +21,13 @@ class TodoApp extends React.Component {
   }
 
   addTodo(task) {
-    dummyData.push({
+    const todos = this.state.todos.slice();
+    todos.push({
       taskText: task,
       completed: false
     });
 
-    this.setState({todos: dummyData})
+    this.setState({todos: todos})
   }
 
   removeTodo(index) {
