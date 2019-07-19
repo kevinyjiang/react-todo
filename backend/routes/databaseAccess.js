@@ -20,10 +20,21 @@ router.post('/add', (req, res) => {
 });
 
 router.post('/remove', (req, res) => {
-  console.log(req.body)
   TodoItem.findByIdAndRemove(req.body.id)
     .then(response => res.send(response))
     .catch(error => res.send(error));
 });
+
+router.post('/toggle', (req, res) => {
+  TodoItem.findById(req.body.id)
+    .then(todo => {
+      todo.completed = !todo.completed;
+      todo.save()
+        .then(response => res.send(response))
+        .catch(error => res.send(error));
+    })
+    .catch(error => res.send(error));
+
+})
 
 module.exports = router;

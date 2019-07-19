@@ -48,17 +48,17 @@ class TodoApp extends React.Component {
   toggleTodo(id) {
     axios.post(dbUrl + '/toggle', { id })
       .then(response => {
-        this.setState({todos: response.data})
-      })
-
-    const todos = this.state.todos.slice();
-    todos[index] = {
-      taskText: todos[index].taskText,
-      completed: !todos[index].completed
-    }
-    this.setState({
-      todos: todos
-    })
+        this.setState({
+          todos: this.state.todos.map((todo) => {
+            if (todo._id === id) {
+              todo.completed = !todo.completed;
+              return todo
+            } else {
+              return todo;
+            }
+          })
+        })
+      });
   }
 
   render() {
