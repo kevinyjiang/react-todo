@@ -17,7 +17,7 @@ class TodoList extends React.Component {
             completed={item.completed} />
         )}
       </ul>
-    )
+    );
   }
 }
 

@@ -11,14 +11,14 @@ class TodoApp extends React.Component {
     super(props);
     this.state = {
       todos: []
-    }
+    };
   }
 
   componentDidMount() {
     axios.get(dbUrl + '/all')
       .then(response => {
         this.setState({todos: response.data});
-      })
+      });
   }
 
   addTodo(task) {
@@ -42,7 +42,7 @@ class TodoApp extends React.Component {
       })
       .catch(error => {
         console.log(error);
-      })
+      });
   }
 
   toggleTodo(id) {
@@ -51,8 +51,7 @@ class TodoApp extends React.Component {
         this.setState({
           todos: this.state.todos.map((todo) => {
             if (todo._id === id) {
-              todo.completed = !todo.completed;
-              return todo
+              return response.data;
             } else {
               return todo;
             }
@@ -64,13 +63,12 @@ class TodoApp extends React.Component {
   render() {
     return (
       <div>
-        <InputLine submit={(task) =>
-          this.addTodo(task)} />
+        <InputLine submit={(task) => this.addTodo(task)} />
         <TodoList todoXClick={(id) => this.removeTodo(id)}
           todoItemClick={(id) => this.toggleTodo(id)}
           todos={this.state.todos} />
       </div>
-    )
+    );
   }
 }
 

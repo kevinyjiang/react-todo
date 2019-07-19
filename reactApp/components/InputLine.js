@@ -5,7 +5,7 @@ class InputLine extends React.Component {
     super(props);
     this.state = {
       typedText: ''
-    }
+    };
   }
 
   handleTyping(event) {
